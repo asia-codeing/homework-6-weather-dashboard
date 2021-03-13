@@ -1,21 +1,47 @@
 var searchBtn = $("#search-button");
-var history = JSON.parse(localStorage.getItem("search")) ;
+//var history = JSON.parse(localStorage.getItem("search")) ;
 var citiesList = $(".list-group");
 var cities = [];
+var currentCity = $("#current-city");
+var currentTemperature = $("#temperature");
+var currentHumidty = $("#humidity");
+var currentWSpeed = $("#wind-speed");
+var currentUvindex = $("#uv-index");
+
+$(document).ready(function() {
+var citySearchList = JSON.parse(localStorage.getItem("citySearchList"));
+if (citySearchList == null) {
+     citiesList = {};
+  }
+
 
 searchBtn.on("click",function(event){
     event.preventDefault();
-    var enteredCity = $('input[name="input-city"]').val();
+    var enteredCity = $('input[name="input-city"]').val().trim().toLowerCase();
     if (!enteredCity){
         console.log("You didn't enter a city");
         return;
     }
     citiesList.append('<li>' + enteredCity + '</li>');
     $('input[name="input-city"]').val('');
-    localStorage.setItem("search",JSON.stringify(cities));
+    if (enteredCity != "") {
+        //Check to see if there is any text entered
+        citySearchList[enteredCity] = true;
+        localStorage.setItem("citySearchList", JSON.stringify(citySearchList));
+        
+    }   
+   // localStorage.setItem("search",JSON.stringify(cities));
     getCurrentWeather(enteredCity);
     forecast(enteredCity);
 });
+});
+
+$("#clear-history").on("click", function(){
+    
+    citiesList = "";
+
+})
+
 const apiKey ="398a5ac241a4f7ec9425839acac6ae15";
 
 function getCurrentWeather(cityName) {
@@ -28,39 +54,46 @@ function getCurrentWeather(cityName) {
 .then(function(response){
         console.log(queryURL);
         console.log(response);
-        $(".city-name").html(response.name);
-       // $(".current-date").html(moment(weather.dt.value).format("MMM D, YYYY"));
-        $(".icon").innerHTML("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + "@2x.png'/>");
-        $("#temperature").text(response.main.temp + " °F");
-        $("#humidity").text(response.main.humidity + "%");
-        $("#wind-speed").text(response.wind.speed + " MPH");
+        var weathericon= response.weather[0].icon;
+        var iconurl="https://openweathermap.org/img/wn/"+ weathericon +"@2x.png";
+        var date=new Date(response.dt*1000).toLocaleDateString();
+        $(currentCity).html(response.name +"("+date+")" + "<img src="+iconurl+">");
+       
+        var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+        $(currentTemperature).html((tempF).toFixed(2)+"&#8457");
 
-        var lat = response.coord.lat;
+        $(currentHumidty).html(response.main.humidity+"%");
+        var ws=response.wind.speed;
+        var windsmph=(ws*2.237).toFixed(1);
+        $(currentWSpeed).html(windsmph+"MPH");
         var lon = response.coord.lon;
-        var queryURLUv = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat +"&lon="+ lon +"&appid=" + apiKey;
+        var lat = response.coord.lat;
+       // $(currentUvindex).html(response.value);
+       
+        // This function returns the UVIindex response.
         
+            //lets build the url for uvindex.
+            var queryURLUv = "http://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey +"&lat=" + lat +"&lon="+ lon ;
+            $.ajax({
+            url:queryURLUv ,
+            method:"GET"
+            }).then(function(response){
+                console.log(response)
+                $(currentUvindex).html(response.value);
+            });
+        
+         if(response.value <=2){
+             $("#uv-index").addClass("favorable");
+            }else if(response.value >2 && response.value<=8){
+                $("#uv-index").addClass("moderate ");
+            }
+            else if(response.value >8){
+                $("#uv-index").addClass("severe");
+            }     
+        });
+    }
 
-        //get uv index
-        $.ajax({
-            url: queryURLUv,
-            method: "GET"
-        })
-        .then(function(response) {
-         console.log(queryURL);
-         console.log(response);
-         $("#uv-index").text(response.val());
-        
-        if(response.val() <=2){
-            $("#uv-index").addClass("favorable");
-        }else if(response.val() >2 && response.val()<=8){
-            $("#uv-index").addClass("moderate ");
-        }
-        else if(response.val()() >8){
-            $("#uv-index").addClass("severe");
-        }     
-});
-});
-}
+
 function forecast(cityName){
     var queryURL5 = "http://api.openweathermap.org/data/2.5/forecast?q="+ cityName +"&appid=" + apiKey;
     $.ajax({
@@ -86,3 +119,4 @@ function forecast(cityName){
         
     });
 }
+

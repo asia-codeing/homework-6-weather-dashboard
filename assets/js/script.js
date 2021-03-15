@@ -33,6 +33,11 @@ searchBtn.on("click",function(event){
     }   
     getCurrentWeather(enteredCity);
     forecast(enteredCity);
+
+   citiesList.on("click", function(){
+        getCurrentWeather(enteredCity);
+        forecast(enteredCity);
+    });
 });
 });
 
@@ -40,6 +45,7 @@ searchBtn.on("click",function(event){
 clearHistory.on("click", function(){
     citiesList.empty();
 });
+
 
 //set the APIKEY
 const apiKey ="398a5ac241a4f7ec9425839acac6ae15";
@@ -59,11 +65,11 @@ function getCurrentWeather(cityName) {
         var date=new Date(response.dt*1000).toLocaleDateString();
         $(currentCity).html(response.name +"("+date+")" + "<img src="+iconurl+">");
         var tempF = (response.main.temp - 273.15) * 1.80 + 32;
-        $(currentTemperature).html((tempF).toFixed(2)+"&#8457");
-        $(currentHumidty).html(response.main.humidity+"%");
+        $(currentTemperature).html(" " + (tempF).toFixed(2)+"&#8457");
+        $(currentHumidty).html(" " +response.main.humidity+"%");
         var ws=response.wind.speed;
         var windsmph=(ws*2.237).toFixed(1);
-        $(currentWSpeed).html(windsmph+"MPH");
+        $(currentWSpeed).html(" " + windsmph+"MPH");
         var lon = response.coord.lon;
         var lat = response.coord.lat;
         //the url for uvindex.
@@ -73,14 +79,15 @@ function getCurrentWeather(cityName) {
         method:"GET"
         }).then(function(response){
             console.log(response)
-            $(currentUvindex).html(response.value);
+            $(currentUvindex).html(" " + response.value);
       
-        if(response.value <= 2.00){
+        if(response.value <= 2.0){
             $(currentUvindex).addClass("favorable");
-        }else if(response.value > 2 && response.value < 8){
+        } 
+        if(response.value > 2.0 && response.value <= 8.0){
             $(currentUvindex).addClass("moderate");
         }
-        else if(response.value > 8){
+        if(response.value > 8.0){
             $(currentUvindex).addClass("severe");
         } 
     });   

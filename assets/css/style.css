@@ -1,16 +1,16 @@
-.severe{
+span.severe{
     padding: 3px;
     background-color: red;
-    color:white;
+   
 }
 
-.moderate{
+span.moderate{
     padding: 3px;
-    background-color: yellow;
+    background-color: rgba(252, 252, 7, 0.959);
 }
 
-.favorable{
+span.favorable{
     padding: 3px;
     background-color: green;
-    color:white;
+   
 }

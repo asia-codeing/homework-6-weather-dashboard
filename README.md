@@ -2,6 +2,12 @@
 Weather Dashboard
 
 
+# Screenshot to deployed application:
+
+![weather-app](./assets/images/weather.gif)
+
+
+# Link to deployed application:
 
 
 ## Acceptance Criteria

@@ -8,10 +8,14 @@ var currentHumidty = $("#humidity");
 var currentWSpeed = $("#wind-speed");
 var currentUvindex = $("#uvIndex");
 var clearHistory = $("#clear-history");
+var saveList = [];
 
 $(document).ready(function() {
     // get the search list from the local storage
      var citySearchList = JSON.parse(localStorage.getItem("citySearchList"));
+     console.log(citySearchList)
+     saveList = citySearchList;
+     console.log(saveList);
      if (citySearchList == null) {
      citiesList = {};
     }
@@ -25,7 +29,9 @@ searchBtn.on("click",function(event){
         return;
     }
     var history = '<li>' + enteredCity + '</li>';
+    console.log(history);
     citiesList.append(history);
+    
     $('input[name="input-city"]').val('');
     if (enteredCity != "") {
         //Check to see if there is any text entered
@@ -118,5 +124,9 @@ function forecast(cityName){
         }
         
     });
+}
+
+for (var i = 0; i < saveList.length; i++) {
+    console.log(saveList[i]);
 }
 

@@ -24,7 +24,8 @@ searchBtn.on("click",function(event){
         console.log("You didn't enter a city");
         return;
     }
-    citiesList.append('<li>' + enteredCity + '</li>');
+    var history = '<li>' + enteredCity + '</li>';
+    citiesList.append(history);
     $('input[name="input-city"]').val('');
     if (enteredCity != "") {
         //Check to see if there is any text entered

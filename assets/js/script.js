@@ -68,7 +68,7 @@ const apiKey ="398a5ac241a4f7ec9425839acac6ae15";
 //this function bring the current weather condition
 function getCurrentWeather(cityName) {
     console.log(cityName);
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ cityName + "&appid=" + apiKey;
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ cityName + "&appid=" + apiKey;
     $.ajax({ 
         url: queryURL, 
         method: "GET"
@@ -89,7 +89,7 @@ function getCurrentWeather(cityName) {
         var lon = response.coord.lon;
         var lat = response.coord.lat;
         //the url for uvindex.
-        var queryURLUv = "http://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey +"&lat=" + lat +"&lon="+ lon ;
+        var queryURLUv = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey +"&lat=" + lat +"&lon="+ lon ;
         $.ajax({
         url:queryURLUv,
         method:"GET"
@@ -112,7 +112,7 @@ function getCurrentWeather(cityName) {
 
 //function to get 5 days forcast
 function forecast(cityName){
-    var queryURL5 = "http://api.openweathermap.org/data/2.5/forecast?q="+ cityName +"&appid=" + apiKey;
+    var queryURL5 = "https://api.openweathermap.org/data/2.5/forecast?q="+ cityName +"&appid=" + apiKey;
     $.ajax({
         url:queryURL5,
         method:"GET"

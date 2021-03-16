@@ -1,5 +1,4 @@
 var searchBtn = $("#search-button");
-//var history = JSON.parse(localStorage.getItem("search")) ;
 var citiesList = $(".list-group");
 var cities = [];
 var currentCity = $("#current-city");
@@ -12,13 +11,13 @@ var saveList = [];
 
 $(document).ready(function() {
     // get the search list from the local storage
-     var citySearchList = JSON.parse(localStorage.getItem("citySearchList"));
+    /* var citySearchList = JSON.parse(localStorage.getItem("citySearchList"));
      console.log(citySearchList)
      saveList = citySearchList;
      console.log(saveList);
      if (citySearchList == null) {
      citiesList = {};
-    }
+    }*/
 
 //search button
 searchBtn.on("click",function(event){
@@ -35,17 +34,27 @@ searchBtn.on("click",function(event){
     $('input[name="input-city"]').val('');
     if (enteredCity != "") {
         //Check to see if there is any text entered
-        citySearchList[enteredCity] = true;
-        localStorage.setItem("citySearchList", JSON.stringify(citySearchList));   
+        //citySearchList[enteredCity] = true;
+        saveList.push(enteredCity)
+        localStorage.setItem("citySearchList", JSON.stringify(saveList));   
     }   
     getCurrentWeather(enteredCity);
     forecast(enteredCity);
 
-   citiesList.on("click", function(){
-        getCurrentWeather(enteredCity);
-        forecast(enteredCity);
+    citiesList.on("click", function(){
+        getCurrentWeather(history);
+        forecast(history);
     });
 });
+var citySearchList = JSON.parse(localStorage.getItem("citySearchList"));
+console.log(citySearchList);
+
+for (var i = 0; i < citySearchList.length; i++){
+    var history = '<li>' + citySearchList[i] + '</li>';
+    console.log(history);
+    citiesList.append(history);
+}
+
 });
 
 //clear button
@@ -126,7 +135,4 @@ function forecast(cityName){
     });
 }
 
-for (var i = 0; i < saveList.length; i++) {
-    console.log(saveList[i]);
-}
 

@@ -1,6 +1,5 @@
 var searchBtn = $("#search-button");
 var citiesList = $(".list-group");
-var cities = [];
 var currentCity = $("#current-city");
 var currentTemperature = $("#temperature");
 var currentHumidty = $("#humidity");
@@ -10,15 +9,6 @@ var clearHistory = $("#clear-history");
 var saveList = [];
 
 $(document).ready(function() {
-    // get the search list from the local storage
-    /* var citySearchList = JSON.parse(localStorage.getItem("citySearchList"));
-     console.log(citySearchList)
-     saveList = citySearchList;
-     console.log(saveList);
-     if (citySearchList == null) {
-     citiesList = {};
-    }*/
-
 //search button
 searchBtn.on("click",function(event){
     event.preventDefault();
@@ -34,17 +24,11 @@ searchBtn.on("click",function(event){
     $('input[name="input-city"]').val('');
     if (enteredCity != "") {
         //Check to see if there is any text entered
-        //citySearchList[enteredCity] = true;
         saveList.push(enteredCity)
         localStorage.setItem("citySearchList", JSON.stringify(saveList));   
     }   
     getCurrentWeather(enteredCity);
     forecast(enteredCity);
-
-    citiesList.on("click", function(){
-        getCurrentWeather(history);
-        forecast(history);
-    });
 });
 var citySearchList = JSON.parse(localStorage.getItem("citySearchList"));
 console.log(citySearchList);
@@ -54,6 +38,11 @@ for (var i = 0; i < citySearchList.length; i++){
     console.log(history);
     citiesList.append(history);
 }
+//function click on a city in the search history,I am again presented with current and future conditions for that city.
+citiesList.on("click", function(){
+        getCurrentWeather(citySearchList);
+        forecast(citySearchList);
+});
 
 });
 

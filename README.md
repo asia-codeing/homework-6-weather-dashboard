@@ -22,7 +22,7 @@ Weather app that provides current and future weather forecasts in cities.
 
 
 ## Link to deployed application:
-[Weather-app]https://asia-codeing.github.io/homework-6-weather-dashboard/
+[Weather-app](https://asia-codeing.github.io/weather-dashboard/)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

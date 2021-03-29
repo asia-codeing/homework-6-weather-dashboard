@@ -1,4 +1,5 @@
-# Weather app that provides current and future weather forecasts in cities.
+# weather-dashboard
+Weather app that provides current and future weather forecasts in cities.
 
 ## Table of contents
 * [Launch](#Launch)

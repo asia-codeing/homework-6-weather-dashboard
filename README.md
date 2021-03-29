@@ -1,4 +1,4 @@
-# Weather-dashboard:
+# Weather-dashboard
 Weather app that provides current and future weather forecasts in cities.
 
 ## Table of contents:

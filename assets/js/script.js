@@ -52,9 +52,9 @@ clearHistory.on("click", function(){
 });
 
 
-//set the APIKEY
+//Set the APIKEY
 const apiKey ="398a5ac241a4f7ec9425839acac6ae15";
-//this function bring the current weather condition
+//This function bring the current weather condition
 function getCurrentWeather(cityName) {
     console.log(cityName);
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ cityName + "&appid=" + apiKey;
@@ -99,7 +99,7 @@ function getCurrentWeather(cityName) {
     });
 }
 
-//function to get 5 days forcast
+//Function to get 5 days forcast
 function forecast(cityName){
     var queryURL5 = "https://api.openweathermap.org/data/2.5/forecast?q="+ cityName +"&appid=" + apiKey;
     $.ajax({
